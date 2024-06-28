@@ -25,4 +25,10 @@ class mahasiswaModel extends CI_Model
         //parameter pertama nama tabel
         $this->db->insert('mahasiswa', $data);
     }
+
+    public function hapusDataMahasiswa($nim)
+    {
+        $this->db->where('nim', $nim);
+        $this->db->delete('mahasiswa');
+    }
 }

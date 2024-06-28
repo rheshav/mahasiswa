@@ -71,7 +71,6 @@ class Mahasiswa extends CI_Controller
         $nim = $this->input->post('nim');
         $nama = $this->input->post('nama');
 
-
         // cara keempat adalah campuran dari cara kedua dan ketiga
         // yakni untuk nim dan nama di deklarasikan dulu variable nya
         // sedangkan untuk attribute lainnya langsung menggunakan post method
@@ -90,11 +89,3 @@ class Mahasiswa extends CI_Controller
         redirect('DataMahasiswa/index');
     }
 }
-
-echo "# biography" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin git@github.com:rheshav/mahasiswa.git
-git push -u origin main

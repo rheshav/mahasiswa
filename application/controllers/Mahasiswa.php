@@ -47,7 +47,19 @@ class Mahasiswa extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             $this->mahasiswaModel->tambahDataMahasiswa();
+
+            //parameternya ada 2, sessionnya apa, isinya apa
+            //set_flashdata() untuk nge-set, kalo flashdata() aja yg di view buat nampilin
+            $this->session->set_flashdata('flash', 'Ditambahkan');
+
             redirect('mahasiswa'); //ini masuk ke controller mahasiswa
         }
+    }
+
+    public function hapus($nim)
+    {
+        $this->mahasiswaModel->hapusDataMahasiswa($nim);
+        $this->session->set_flashdata('flash', 'Dihapus');
+        redirect('mahasiswa');
     }
 }
