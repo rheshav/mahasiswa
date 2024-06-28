@@ -2,7 +2,7 @@
     <div class="row mt-3">
         <div class="col-md-6">
             <div class="card">
-                <h5 class="card-header">Detail Data Mahasiswa</h5>
+                <h5 class="card-header"><?= $judul; ?></h5>
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2 text-body-secondary"><?= $mahasiswa['nim']; ?></h6>
                     <h5 class="card-title"><?= $mahasiswa['nama']; ?></h5>

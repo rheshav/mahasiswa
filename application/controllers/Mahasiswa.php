@@ -67,15 +67,27 @@ class Mahasiswa extends CI_Controller
     public function detail($nim)
     {
         $data['judul'] = 'Detail Data Mahasiswa';
+        //$data dibawah itu deklarasi array 'mahasiswa'
+        //nanti di view biar bisa dipanggil pake $mahasiswa langsung
         $data['mahasiswa'] = $this->mahasiswaModel->getMahasiswaByNIM($nim);
+
+        //$data dibawah ini berisikan banyak key, jadi misal ada  $data['judul'] & $data['mahasiswa']
+        //value yg dipanggil mengikuti key yg digunakan
+        //misal $judul akan menampilkan value dari judul
+        //$mahasiswa juga sama, meskipun $judul & $mahasiswa dipanggil dalam 1 file (contoh di detail.php)
         $this->load->view('templates/header', $data);
         $this->load->view('mahasiswa/detail', $data);
         $this->load->view('templates/footer');
     }
 
-    public function edit()
+    //$nim di dalam function diambil dari URL
+    public function edit($nim)
     {
         $data['judul'] = 'Form Edit Data Mahasiswa';
+        //syntax dibawah untuk mendeklarasikan key 'mahasiswa' dalam variable $data yang berisi 
+        //data mahasiswa berdasarkan nim "getMahasiswaByNIM($nim)" di model
+        $data['mahasiswa'] = $this->mahasiswaModel->getMahasiswaByNIM($nim);
+
         //untuk validasi data yg di dalam set_rules(
         //parameter pertama itu value 'name' dari View nya,
         //parameter kedua itu yang mau ditampilkan jika ada error,
@@ -92,7 +104,7 @@ class Mahasiswa extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
-            $this->load->view('mahasiswa/edit');
+            $this->load->view('mahasiswa/edit', $data);
             $this->load->view('templates/footer');
         } else {
             $this->mahasiswaModel - editDataMahasiswa();
