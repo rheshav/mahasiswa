@@ -37,4 +37,21 @@ class mahasiswaModel extends CI_Model
         //syntax dibawah parameter nim di database ambil data dari $nim yg di view
         return $this->db->get_where('mahasiswa', ['nim' => $nim])->row_array();
     }
+    public function editDataMahasiswa()
+    {
+        $data = [
+            "nim" => $this->input->post('nim', true),
+            "nama" => $this->input->post('nama', true),
+            "jurusan" => $this->input->post('jurusan', true),
+            "angkatan" => $this->input->post('angkatan', true),
+            "semester" => $this->input->post('semester', true),
+            "nohp" => $this->input->post('nohp', true),
+            "angkatan" => $this->input->post('angkatan', true),
+            "status" => $this->input->post('nim', true)
+        ];
+
+
+        //parameter pertama nama tabel
+        $this->db->update('mahasiswa', $data);
+    }
 }

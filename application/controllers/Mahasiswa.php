@@ -88,11 +88,12 @@ class Mahasiswa extends CI_Controller
         //data mahasiswa berdasarkan nim "getMahasiswaByNIM($nim)" di model
         $data['mahasiswa'] = $this->mahasiswaModel->getMahasiswaByNIM($nim);
 
+        $data['jurusan'] = ['Informatika', 'Matematika', 'Kimia', 'Fisika', 'Biologi'];
+
         //untuk validasi data yg di dalam set_rules(
         //parameter pertama itu value 'name' dari View nya,
         //parameter kedua itu yang mau ditampilkan jika ada error,
         //parameter ketiga itu rulesnya)
-
         $this->form_validation->set_rules('nim', 'NIM', 'required');
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('jurusan', 'Jurusan', 'required');

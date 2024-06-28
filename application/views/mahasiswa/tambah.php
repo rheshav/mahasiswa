@@ -79,6 +79,7 @@
                             </div>
                             <div class="form-text text-danger fst-italic"><?= form_error('status') ?></div>
                         </div>
+                        <a href="<?= base_url(); ?>mahasiswa" class="btn btn-danger float-start">Kembali</a>
                         <button type="submit" name="tambah" class="btn btn-primary float-end">Tambah Data</button>
                         <!-- <a href="#" type="submit" name="tambah" class="btn btn-primary float-end">Tambah Data</a> -->
                     </form>
