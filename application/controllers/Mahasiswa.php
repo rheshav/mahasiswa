@@ -10,6 +10,7 @@ class Mahasiswa extends CI_Controller
         parent::__construct();
         $this->load->model('mahasiswaModel');
         $this->load->library('form_validation');
+        $this->load->helper('form');
     }
     public function index()
     // = '' nilai default = kosong jika tidak ada parameter nama dalam link
@@ -61,5 +62,46 @@ class Mahasiswa extends CI_Controller
         $this->mahasiswaModel->hapusDataMahasiswa($nim);
         $this->session->set_flashdata('flash', 'Dihapus');
         redirect('mahasiswa');
+    }
+
+    public function detail($nim)
+    {
+        $data['judul'] = 'Detail Data Mahasiswa';
+        $data['mahasiswa'] = $this->mahasiswaModel->getMahasiswaByNIM($nim);
+        $this->load->view('templates/header', $data);
+        $this->load->view('mahasiswa/detail', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function edit()
+    {
+        $data['judul'] = 'Form Edit Data Mahasiswa';
+        //untuk validasi data yg di dalam set_rules(
+        //parameter pertama itu value 'name' dari View nya,
+        //parameter kedua itu yang mau ditampilkan jika ada error,
+        //parameter ketiga itu rulesnya)
+
+        $this->form_validation->set_rules('nim', 'NIM', 'required');
+        $this->form_validation->set_rules('nama', 'Nama', 'required');
+        $this->form_validation->set_rules('jurusan', 'Jurusan', 'required');
+        $this->form_validation->set_rules('angkatan', 'Angkatan', 'required|numeric');
+        $this->form_validation->set_rules('semester', 'Semester', 'required|numeric');
+        $this->form_validation->set_rules('nohp', 'NO.HP', 'required|numeric');
+        $this->form_validation->set_rules('alamat', 'Alamat', 'required');
+        $this->form_validation->set_rules('status', 'Status', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('mahasiswa/edit');
+            $this->load->view('templates/footer');
+        } else {
+            $this->mahasiswaModel - editDataMahasiswa();
+
+            //parameternya ada 2, sessionnya apa, isinya apa
+            //set_flashdata() untuk nge-set, kalo flashdata() aja yg di view buat nampilin
+            $this->session->set_flashdata('flash', 'Diedit');
+
+            redirect('mahasiswa'); //ini masuk ke controller mahasiswa
+        }
     }
 }

@@ -28,7 +28,13 @@ class mahasiswaModel extends CI_Model
 
     public function hapusDataMahasiswa($nim)
     {
-        $this->db->where('nim', $nim);
-        $this->db->delete('mahasiswa');
+        // $this->db->where('nim', $nim);
+        $this->db->delete('mahasiswa', ['nim' => $nim]);
+    }
+
+    public function getMahasiswaByNIM($nim)
+    {
+        //syntax dibawah parameter nim di database ambil data dari $nim yg di view
+        return $this->db->get_where('mahasiswa', ['nim' => $nim])->row_array();
     }
 }
