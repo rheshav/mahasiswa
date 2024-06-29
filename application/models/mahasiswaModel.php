@@ -6,7 +6,7 @@ class mahasiswaModel extends CI_Model
         // $query = $this->db->get('mahasiswa');
         // return $query->result_array();
 
-        return $this->db->get('mahasiswa');
+        return $this->db->get('mahasiswa')->result_array();
     }
 
     public function tambahDataMahasiswa()
@@ -51,7 +51,21 @@ class mahasiswaModel extends CI_Model
         ];
 
 
-        //parameter pertama nama tabel
+        //parameter pertama nama tabel pada database
         $this->db->update('mahasiswa', $data);
+    }
+    public function cariDataMahasiswa()
+    {
+        //post('keyword') keyword disini diambil dari post HTML name="keyword"
+        $keyword = $this->input->post('keyword', true);
+        $this->db->like('nim', $keyword);
+        $this->db->or_like('nama', $keyword);
+        $this->db->or_like('jurusan', $keyword);
+        $this->db->or_like('angkatan', $keyword);
+        $this->db->or_like('semester', $keyword);
+        $this->db->or_like('nohp', $keyword);
+        $this->db->or_like('alamat', $keyword);
+        $this->db->or_like('status', $keyword);
+        return $this->db->get('mahasiswa')->result_array();
     }
 }
