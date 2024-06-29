@@ -1,5 +1,5 @@
 <?php
-class Mahasiswa extends CI_Controller
+class Peoples extends CI_Controller
 {
 
     //construct untuk manggil satu method di semua function dalam 1 kelas
