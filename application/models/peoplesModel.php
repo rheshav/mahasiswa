@@ -6,7 +6,7 @@ class mahasiswaModel extends CI_Model
         // $query = $this->db->get('mahasiswa');
         // return $query->result_array();
 
-        return $this->db->get('mahasiswa')->result_array();
+        return $this->db->get('peoples')->result_array();
     }
 
     public function tambahDataMahasiswa()

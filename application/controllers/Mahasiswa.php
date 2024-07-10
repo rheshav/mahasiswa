@@ -19,9 +19,12 @@ class Mahasiswa extends CI_Controller
     //$nama yg di index.php ambil value dari link
     {
         $data['judul'] = 'Homepage Mahasiswa';
-        $data['mahasiswa'] = $this->mahasiswaModel->tampilData()->result_array();
+        $data['mahasiswa'] = $this->mahasiswaModel->tampilData();
+        if ($this->input->post('keyword')) {
+            $data['mahasiswa'] = $this->mahasiswaModel->cariDataMahasiswa();
+        }
         $this->load->view('templates/header', $data);
-        $this->load->view('mahasiswa/index');
+        $this->load->view('mahasiswa/index', $data);
         $this->load->view('templates/footer');
     }
 
