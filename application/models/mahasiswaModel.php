@@ -68,4 +68,9 @@ class mahasiswaModel extends CI_Model
         $this->db->or_like('status', $keyword);
         return $this->db->get('mahasiswa')->result_array();
     }
+
+    public function get_duplicate()
+    {
+        return $this->db->get('mahasiswa')->result_array();
+    }
 }

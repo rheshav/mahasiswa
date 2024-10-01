@@ -120,4 +120,12 @@ class Mahasiswa extends CI_Controller
             redirect('mahasiswa'); //ini masuk ke controller mahasiswa
         }
     }
+
+    public function dupe()
+    {
+        $data['mahasiswa'] = $this->mahasiswaModel->get_duplicate();
+        $this->load->view('templates/header', $data);
+        $this->load->view('mahasiswa/dupe', $data);
+        $this->load->view('templates/footer');
+    }
 }

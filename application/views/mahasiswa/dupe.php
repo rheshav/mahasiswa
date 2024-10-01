@@ -9,10 +9,7 @@
     <?php endif; ?>
     <div class="row mt-3">
         <div class="col-md-6">
-            <a href="<?= base_url(); ?>mahasiswa/tambah" class="btn btn-primary"> Tambah Data Mahasiswa</a>
-        </div>
-        <div class="col-md-6">
-            <a href="<?= base_url(); ?>mahasiswa/dupe" class="btn btn-primary"> Dupe Data Mahasiswa</a>
+            <a href="#" class="btn btn-primary"> Duplicate All</a>
         </div>
     </div>
     <div class="row mt-3">
