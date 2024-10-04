@@ -38,7 +38,7 @@
                 <?php foreach ($mahasiswa as $mhs) : ?>
                     <li class="list-group-item">
                         <?= $mhs['nama']; ?>
-                        <a href="<?= base_url(); ?>mahasiswa/hapus/<?= $mhs['nim']; ?>" class="badge text-bg-danger float-end" onclick="return confirm('Apakah Anda yakin?');">Hapus</a>
+                        <a href="<?= base_url(); ?>mahasiswa/hapus/<?= $mhs['no']; ?>" class="badge text-bg-danger float-end" onclick="return confirm('Apakah Anda yakin?');">Hapus</a>
                         <a href="<?= base_url(); ?>mahasiswa/edit/<?= $mhs['nim']; ?>" class="badge text-bg-success float-end">Edit</a>
                         <a href="<?= base_url(); ?>mahasiswa/detail/<?= $mhs['nim']; ?>" class="badge text-bg-primary float-end">Detail</a>
                     </li>

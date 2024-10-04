@@ -26,10 +26,10 @@ class mahasiswaModel extends CI_Model
         $this->db->insert('mahasiswa', $data);
     }
 
-    public function hapusDataMahasiswa($nim)
+    public function hapusDataMahasiswa($no)
     {
         // $this->db->where('nim', $nim);
-        $this->db->delete('mahasiswa', ['nim' => $nim]);
+        $this->db->delete('mahasiswa', ['no' => $no]);
     }
 
     public function getMahasiswaByNIM($nim)

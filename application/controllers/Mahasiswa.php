@@ -60,11 +60,18 @@ class Mahasiswa extends CI_Controller
         }
     }
 
-    public function hapus($nim)
+    public function hapus($no)
     {
-        $this->mahasiswaModel->hapusDataMahasiswa($nim);
+        $this->mahasiswaModel->hapusDataMahasiswa($no);
         $this->session->set_flashdata('flash', 'Dihapus');
         redirect('mahasiswa');
+    }
+
+    public function hapus_dupe($no)
+    {
+        $this->mahasiswaModel->hapusDataMahasiswa($no);
+        $this->session->set_flashdata('flash', 'Dihapus');
+        redirect('mahasiswa/dupe');
     }
 
     public function detail($nim)
@@ -111,7 +118,7 @@ class Mahasiswa extends CI_Controller
             $this->load->view('mahasiswa/edit', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->mahasiswaModel - editDataMahasiswa();
+            $this->mahasiswaModel->editDataMahasiswa();
 
             //parameternya ada 2, sessionnya apa, isinya apa
             //set_flashdata() untuk nge-set, kalo flashdata() aja yg di view buat nampilin
@@ -123,9 +130,47 @@ class Mahasiswa extends CI_Controller
 
     public function dupe()
     {
-        $data['mahasiswa'] = $this->mahasiswaModel->get_duplicate();
+        // $data['mahasiswa'] = $this->mahasiswaModel->get_duplicate();
+        $data = array(
+            'mahasiswa' => $this->mahasiswaModel->get_duplicate(),
+            'action' => site_url('mahasiswa/dupe_action')
+        );
+        // $data = array(
+        //     'action' => site_url('Mahasiswa/dupe_action')
+        // );
         $this->load->view('templates/header', $data);
         $this->load->view('mahasiswa/dupe', $data);
         $this->load->view('templates/footer');
+    }
+
+    // public function dupe_action()
+    // {
+    //     $dupe = $this->mahasiswaModel->get_duplicate();
+    //     foreach ($dupe as $row) {
+    //         unset($row['no']);
+    //         $this->db->insert('mahasiswa', $row); // Replace 'your_table_name' with your actual table name
+    //     }
+    //     redirect('mahasiswa/dupe');
+    // }
+
+    // kode dibawah best practical use dari chatgpt
+    public function dupe_action()
+    {
+        $dupe = $this->mahasiswaModel->get_duplicate();
+        $data_to_insert = [];
+
+        foreach ($dupe as $row) {
+            unset($row['no']); // Remove 'no' if it's auto-incremented
+            $row['tanggal'] = date('d-m-Y');
+            $data_to_insert[] = $row; // Add row to the array
+        }
+
+        // Insert data if there's any to insert
+        if (!empty($data_to_insert)) {
+            $this->db->insert_batch('mahasiswa', $data_to_insert);
+        }
+
+        // Redirect after the operation
+        redirect('mahasiswa/dupe');
     }
 }
