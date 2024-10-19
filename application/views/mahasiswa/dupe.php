@@ -9,7 +9,8 @@
     <?php endif; ?>
     <div class="row mt-3">
         <div class="col-md-6">
-            <a href="<?= $action; ?>" class="btn btn-primary"> Duplicate All</a>
+            <a href="<?= $action; ?>" class="btn btn-primary"> Duplicate All Today</a>
+            <a href="<?= $action2; ?>" class="btn btn-primary"> Duplicate All Next Day</a>
         </div>
     </div>
     <div class="row mt-3">
@@ -36,8 +37,8 @@
                     <li class="list-group-item">
                         <?= $mhs['nama']; ?>
                         <a href="<?= base_url(); ?>mahasiswa/hapus_dupe/<?= $mhs['no']; ?>" class="badge text-bg-danger float-end" onclick="return confirm('Apakah Anda yakin?');">Hapus</a>
-                        <a href="<?= base_url(); ?>mahasiswa/edit/<?= $mhs['nim']; ?>" class="badge text-bg-success float-end">Edit</a>
-                        <a href="<?= base_url(); ?>mahasiswa/detail/<?= $mhs['nim']; ?>" class="badge text-bg-primary float-end">Detail</a>
+                        <a href="<?= base_url(); ?>mahasiswa/edit/<?= $mhs['no']; ?>" class="badge text-bg-success float-end">Edit</a>
+                        <a href="<?= base_url(); ?>mahasiswa/detail/<?= $mhs['no']; ?>" class="badge text-bg-primary float-end">Detail</a>
                     </li>
                 <?php endforeach; ?>
             </ul>

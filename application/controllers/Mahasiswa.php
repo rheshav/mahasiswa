@@ -74,12 +74,13 @@ class Mahasiswa extends CI_Controller
         redirect('mahasiswa/dupe');
     }
 
-    public function detail($nim)
+    public function detail()
     {
         $data['judul'] = 'Detail Data Mahasiswa';
         //$data dibawah itu deklarasi array 'mahasiswa'
         //nanti di view biar bisa dipanggil pake $mahasiswa langsung
-        $data['mahasiswa'] = $this->mahasiswaModel->getMahasiswaByNIM($nim);
+        $no = $this->input->get('no');
+        $data['mahasiswa'] = $this->mahasiswaModel->getMahasiswaByNIM($no);
 
         //$data dibawah ini berisikan banyak key, jadi misal ada  $data['judul'] & $data['mahasiswa']
         //value yg dipanggil mengikuti key yg digunakan
@@ -89,14 +90,29 @@ class Mahasiswa extends CI_Controller
         $this->load->view('mahasiswa/detail', $data);
         $this->load->view('templates/footer');
     }
+    // public function detail_old($no)
+    // {
+    //     $data['judul'] = 'Detail Data Mahasiswa';
+    //     //$data dibawah itu deklarasi array 'mahasiswa'
+    //     //nanti di view biar bisa dipanggil pake $mahasiswa langsung
+    //     $data['mahasiswa'] = $this->mahasiswaModel->getMahasiswaByNIM($no);
+
+    //     //$data dibawah ini berisikan banyak key, jadi misal ada  $data['judul'] & $data['mahasiswa']
+    //     //value yg dipanggil mengikuti key yg digunakan
+    //     //misal $judul akan menampilkan value dari judul
+    //     //$mahasiswa juga sama, meskipun $judul & $mahasiswa dipanggil dalam 1 file (contoh di detail.php)
+    //     $this->load->view('templates/header', $data);
+    //     $this->load->view('mahasiswa/detail', $data);
+    //     $this->load->view('templates/footer');
+    // }
 
     //$nim di dalam function diambil dari URL
-    public function edit($nim)
+    public function edit($no)
     {
         $data['judul'] = 'Form Edit Data Mahasiswa';
         //syntax dibawah untuk mendeklarasikan key 'mahasiswa' dalam variable $data yang berisi 
         //data mahasiswa berdasarkan nim "getMahasiswaByNIM($nim)" di model
-        $data['mahasiswa'] = $this->mahasiswaModel->getMahasiswaByNIM($nim);
+        $data['mahasiswa'] = $this->mahasiswaModel->getMahasiswaByNIM($no);
 
         $data['jurusan'] = ['Informatika', 'Matematika', 'Kimia', 'Fisika', 'Biologi'];
 
@@ -133,11 +149,13 @@ class Mahasiswa extends CI_Controller
         // $data['mahasiswa'] = $this->mahasiswaModel->get_duplicate();
         $data = array(
             'mahasiswa' => $this->mahasiswaModel->get_duplicate(),
-            'action' => site_url('mahasiswa/dupe_action')
+            'action' => site_url('mahasiswa/dupe_action'),
+            'action2' => site_url('mahasiswa/dupe_action_next_day')
         );
         // $data = array(
         //     'action' => site_url('Mahasiswa/dupe_action')
         // );
+        // var_dump($data['mahasiswa']);
         $this->load->view('templates/header', $data);
         $this->load->view('mahasiswa/dupe', $data);
         $this->load->view('templates/footer');
@@ -158,10 +176,29 @@ class Mahasiswa extends CI_Controller
     {
         $dupe = $this->mahasiswaModel->get_duplicate();
         $data_to_insert = [];
-
         foreach ($dupe as $row) {
             unset($row['no']); // Remove 'no' if it's auto-incremented
             $row['tanggal'] = date('d-m-Y');
+            $data_to_insert[] = $row; // Add row to the array
+        }
+
+        // Insert data if there's any to insert
+        if (!empty($data_to_insert)) {
+            $this->db->insert_batch('mahasiswa', $data_to_insert);
+        }
+
+        // Redirect after the operation
+        redirect('mahasiswa/dupe');
+    }
+
+
+    public function dupe_action_next_day()
+    {
+        $dupe = $this->mahasiswaModel->get_duplicate();
+        $data_to_insert = [];
+        foreach ($dupe as $row) {
+            unset($row['no']); // Remove 'no' if it's auto-incremented
+            $row['tanggal'] = date('Y-m-d', strtotime('+1 day'));
             $data_to_insert[] = $row; // Add row to the array
         }
 
